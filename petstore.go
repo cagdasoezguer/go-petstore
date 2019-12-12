@@ -78,7 +78,7 @@ type Client struct {
 	http    *http.Client
 	limiter *rate.Limiter
 
-	Pets  Pets
+	Pets Pets
 }
 
 // NewClient creates a new Petstore API client.
@@ -133,8 +133,7 @@ func NewClient(cfg *Config) (*Client, error) {
 // request body. If the method is GET, the value will be parsed and added as
 // query parameters.
 func (c *Client) newRequest(method, path string, v interface{}) (*http.Request, error) {
-	// have to add the odd "/" at end because of jersey issues
-	u, err := c.baseURL.Parse(path + "/")
+	u, err := c.baseURL.Parse(path)
 	if err != nil {
 		return nil, err
 	}
