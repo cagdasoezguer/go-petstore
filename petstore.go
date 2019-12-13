@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	gPath "path"
 	"strings"
 
 	"github.com/google/go-querystring/query"
@@ -133,7 +134,8 @@ func NewClient(cfg *Config) (*Client, error) {
 // request body. If the method is GET, the value will be parsed and added as
 // query parameters.
 func (c *Client) newRequest(method, path string, v interface{}) (*http.Request, error) {
-	u, err := c.baseURL.Parse(path)
+	p := gPath.Join(c.baseURL.Path, path)
+	u, err := url.Parse(p)
 	if err != nil {
 		return nil, err
 	}
