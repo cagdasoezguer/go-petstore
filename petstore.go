@@ -135,7 +135,7 @@ func NewClient(cfg *Config) (*Client, error) {
 // query parameters.
 func (c *Client) newRequest(method, path string, v interface{}) (*http.Request, error) {
 	p := gPath.Join(c.baseURL.Path, path)
-	u, err := url.Parse(p)
+	u, err := c.baseURL.Parse(p)
 	if err != nil {
 		return nil, err
 	}
