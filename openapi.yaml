@@ -5,7 +5,7 @@ info:
   license:
     name: MIT
 servers:
-  - url: http://petstore.swagger.io/v1
+  - url: https://g6pny6dke9.execute-api.us-west-2.amazonaws.com/v1/api
 paths:
   /pets:
     get:
@@ -24,10 +24,9 @@ paths:
       responses:
         '200':
           description: An array of pets
-          content:
-            application/json:    
-              schema:
-                $ref: "#/components/schemas/Pet"
+          type: array
+          items:
+            $ref: '#/components/schemas/Pet'       
     post:
       summary: Create a Pet
       operationId: createPet
@@ -45,7 +44,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CreatePetResponse"
+                $ref: "#/components/schemas/Pet"
         '400':
           description: "Bad Request"
         '500':
@@ -114,7 +113,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UpdatePetResponse"
+                $ref: "#/components/schemas/Pet"
         '400':
             description: "Bad Request"
         '404':
@@ -150,12 +149,6 @@ components:
           type: string
         age:
           type: integer
-    CreatePetResponse:
-      required:
-        - pet
-      properties:
-        pet:
-          $ref: "#/components/schemas/Pet"
     UpdatePetRequest:
       required:
         - name
@@ -168,11 +161,5 @@ components:
           type: string
         age:
           type: integer
-    UpdatePetResponse:
-      required:
-        - pet
-      properties:
-        pet:
-          $ref: "#/components/schemas/Pet"
 
 
