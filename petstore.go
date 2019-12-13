@@ -133,7 +133,7 @@ func NewClient(cfg *Config) (*Client, error) {
 // request body. If the method is GET, the value will be parsed and added as
 // query parameters.
 func (c *Client) newRequest(method, path string, v interface{}) (*http.Request, error) {
-	u, err := url.Parse(baseURL.String()+path)
+	u, err := url.Parse(c.baseURL.String() + path)
 	if err != nil {
 		return nil, err
 	}
