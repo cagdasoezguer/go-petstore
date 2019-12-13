@@ -102,14 +102,9 @@ func NewClient(cfg *Config) (*Client, error) {
 	}
 
 	// Parse the address to make sure its a valid URL.
-	baseURL, err := url.Parse(config.Address)
+	baseURL, err := url.Parse(config.Address + config.BasePath)
 	if err != nil {
 		return nil, fmt.Errorf("invalid address: %v", err)
-	}
-
-	baseURL.Path = config.BasePath
-	if !strings.HasSuffix(baseURL.Path, "/") {
-		baseURL.Path += "/"
 	}
 
 	// Create the client.
