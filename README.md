@@ -64,7 +64,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// Create a new organization
+	// Create a new pet
 	options := sdk.PetCreateOptions{
         Name:  "mittens",
         Species: "cat",
@@ -76,7 +76,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// Delete an organization
+	// Delete a pet
 	err = client.Pets.Delete(pet.ID)
 	if err != nil {
 		log.Fatal(err)
