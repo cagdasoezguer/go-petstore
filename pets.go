@@ -37,7 +37,7 @@ type pets struct {
 
 // PetList represents a list of pets.
 type PetList struct {
-	Items []*Pet
+	Items []*Pet `json:"items"`
 }
 
 // Pet represents a Petstore pet.

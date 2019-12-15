@@ -24,9 +24,10 @@ paths:
       responses:
         '200':
           description: An array of pets
-          type: array
-          items:
-            $ref: '#/components/schemas/Pet'       
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PetList"    
     post:
       summary: Create a Pet
       operationId: createPet
@@ -137,6 +138,14 @@ components:
           type: string
         age:
           type: integer
+    PetList:
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Pet"
     CreatePetRequest:
       required:
         - name

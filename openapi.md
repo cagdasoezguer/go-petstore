@@ -37,22 +37,29 @@ Base URLs:
 
 ```shell
 # You can also use wget
-curl -X GET https://g6pny6dke9.execute-api.us-west-2.amazonaws.com/v1/api/pets
+curl -X GET https://g6pny6dke9.execute-api.us-west-2.amazonaws.com/v1/api/pets \
+  -H 'Accept: application/json'
 
 ```
 
 ```http
 GET https://g6pny6dke9.execute-api.us-west-2.amazonaws.com/v1/api/pets HTTP/1.1
 Host: g6pny6dke9.execute-api.us-west-2.amazonaws.com
+Accept: application/json
 
 ```
 
 ```javascript
+var headers = {
+  'Accept':'application/json'
+
+};
 
 $.ajax({
   url: 'https://g6pny6dke9.execute-api.us-west-2.amazonaws.com/v1/api/pets',
   method: 'get',
 
+  headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
   }
@@ -63,10 +70,16 @@ $.ajax({
 ```javascript--nodejs
 const fetch = require('node-fetch');
 
+const headers = {
+  'Accept':'application/json'
+
+};
+
 fetch('https://g6pny6dke9.execute-api.us-west-2.amazonaws.com/v1/api/pets',
 {
-  method: 'GET'
+  method: 'GET',
 
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -80,9 +93,13 @@ fetch('https://g6pny6dke9.execute-api.us-west-2.amazonaws.com/v1/api/pets',
 require 'rest-client'
 require 'json'
 
+headers = {
+  'Accept' => 'application/json'
+}
+
 result = RestClient.get 'https://g6pny6dke9.execute-api.us-west-2.amazonaws.com/v1/api/pets',
   params: {
-  }
+  }, headers: headers
 
 p JSON.parse(result)
 
@@ -90,10 +107,13 @@ p JSON.parse(result)
 
 ```python
 import requests
+headers = {
+  'Accept': 'application/json'
+}
 
 r = requests.get('https://g6pny6dke9.execute-api.us-west-2.amazonaws.com/v1/api/pets', params={
 
-)
+}, headers = headers)
 
 print r.json()
 
@@ -126,6 +146,11 @@ import (
 
 func main() {
 
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        
+    }
+
     data := bytes.NewBuffer([]byte{jsonReq})
     req, err := http.NewRequest("GET", "https://g6pny6dke9.execute-api.us-west-2.amazonaws.com/v1/api/pets", data)
     req.Header = headers
@@ -147,11 +172,28 @@ func main() {
 |---|---|---|---|---|
 |limit|query|integer(int32)|false|How many items to return at one time (default 100)|
 
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "items": [
+    {
+      "id": "string",
+      "name": "string",
+      "species": "string",
+      "age": 0
+    }
+  ]
+}
+```
+
 <h3 id="listpets-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|An array of pets|None|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|An array of pets|[PetList](#schemapetlist)|
 
 <aside class="success">
 This operation does not require authentication
@@ -857,6 +899,30 @@ This operation does not require authentication
 |name|string|true|none|none|
 |species|string|true|none|none|
 |age|integer|true|none|none|
+
+<h2 id="tocSpetlist">PetList</h2>
+
+<a id="schemapetlist"></a>
+
+```json
+{
+  "items": [
+    {
+      "id": "string",
+      "name": "string",
+      "species": "string",
+      "age": 0
+    }
+  ]
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|items|[[Pet](#schemapet)]|true|none|none|
 
 <h2 id="tocScreatepetrequest">CreatePetRequest</h2>
 
