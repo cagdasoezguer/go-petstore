@@ -33,6 +33,8 @@ var (
 	ErrBadRequest = errors.New("bad request")
 	// ErrResourceNotFound is returned when a receiving a 404.
 	ErrResourceNotFound = errors.New("resource not found")
+	// ErrGatewayTimeout is returned when a receiving a 504.
+	ErrGatewayTimeout = errors.New("gateway timeout")
 )
 
 // Config provides configuration details to the API client.
@@ -193,6 +195,10 @@ func (c *Client) do(ctx context.Context, req *http.Request, v interface{}) error
 	log.Printf("[DEBUG] go-petstore response: %v", resp)
 	// Basic response checking.
 	if err := checkResponseCode(resp); err != nil {
+		//retryable error
+		if err == ErrGatewayTimeout {
+			return c.do(ctx, req, v)
+		}
 		return err
 	}
 
@@ -216,6 +222,8 @@ func checkResponseCode(r *http.Response) error {
 		return ErrBadRequest
 	case 404:
 		return ErrResourceNotFound
+	case 504:
+		return ErrGatewayTimeout
 	}
 
 	// Decode the error payload.

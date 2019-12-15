@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
+	"github.com/davecgh/go-spew/spew"
 	sdk "github.com/scottwinkler/go-petstore"
 )
 
@@ -17,6 +19,10 @@ func main() {
 		log.Fatal(err)
 	}
 
+	// List all Pets
+	petL, _ := client.Pets.List(sdk.PetListOptions{})
+	spew.Printf("petList: %v", petL)
+
 	// Create a new pet
 	options := sdk.PetCreateOptions{
 		Name:    "mittens",
@@ -29,9 +35,20 @@ func main() {
 		log.Fatal(err)
 	}
 
+	// Update pet
+	pet, _ = client.Pets.Update(pet.ID, sdk.PetUpdateOptions{Age: 3})
+
+	// Read pet by ID
+	pet, _ = client.Pets.Read(pet.ID)
+	fmt.Printf("pet: %v \n", pet)
+
 	// Delete a pet
 	err = client.Pets.Delete(pet.ID)
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	// List all Pets
+	petL, _ = client.Pets.List(sdk.PetListOptions{})
+	spew.Printf("petList: %v", petL)
 }

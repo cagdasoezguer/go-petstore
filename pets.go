@@ -55,6 +55,9 @@ type PetListOptions struct {
 
 // List all pets.
 func (s *pets) List(options PetListOptions) (*PetList, error) {
+	if options.Limit == 0 {
+		options.Limit = 100
+	}
 	req, err := s.client.newRequest("GET", "pets", &options)
 	if err != nil {
 		return nil, err
