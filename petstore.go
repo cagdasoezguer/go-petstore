@@ -152,7 +152,10 @@ func (c *Client) newRequest(method, path string, v interface{}) (*http.Request, 
 			body = bytes.NewReader(dat)
 		}
 	}
-
+	//wake up lambda function
+	http.NewRequest("GET", u.String(), body)
+	
+	//perform original request
 	req, err := http.NewRequest(method, u.String(), body)
 	if err != nil {
 		return nil, err
